@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9f07bdf7670745daa1ddfb7fdf23d7f6" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="Model.tblDistributor" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblEmployee" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblExportDetail" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblExportReceipt" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblImportDetail" Width="1.5" PointX="11.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblImportReceipt" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblProduct" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblStoreBuy" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_tblImportReceipt_tblDistributor1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExportReceipt_tblEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblImportReceipt_tblEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExportDetail_tblExportReceipt1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExportDetail_tblProduct1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExportReceipt_tblStoreBuy1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblImportDetail_tblImportReceipt1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblImportDetail_tblProduct1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

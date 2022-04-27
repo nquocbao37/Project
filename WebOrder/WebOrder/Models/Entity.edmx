@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDistributor">
+          <Key>
+            <PropertyRef Name="DistributorID" />
+          </Key>
+          <Property Name="DistributorID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblExportDetail">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ExportReceiptID" />
+          </Key>
+          <Property Name="ProductID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExportReceiptID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblExportReceipt">
+          <Key>
+            <PropertyRef Name="ExportReceiptID" />
+          </Key>
+          <Property Name="ExportReceiptID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="DeliveryStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PayMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblImportDetail">
+          <Key>
+            <PropertyRef Name="ImportReceiptID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ImportReceiptID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblImportReceipt">
+          <Key>
+            <PropertyRef Name="ImportReceiptID" />
+          </Key>
+          <Property Name="ImportReceiptID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DistributorID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImportPrice" Type="float" Nullable="false" />
+          <Property Name="ExportPrice" Type="float" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblStoreBuy">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblExportDetail_tblExportReceipt1">
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="1" />
+          <End Role="tblExportDetail" Type="Self.tblExportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExportReceipt">
+              <PropertyRef Name="ExportReceiptID" />
+            </Principal>
+            <Dependent Role="tblExportDetail">
+              <PropertyRef Name="ExportReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportDetail_tblProduct1">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblExportDetail" Type="Self.tblExportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblExportDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportReceipt_tblEmployee">
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="1" />
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEmployee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tblExportReceipt">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportReceipt_tblStoreBuy1">
+          <End Role="tblStoreBuy" Type="Self.tblStoreBuy" Multiplicity="1" />
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreBuy">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="tblExportReceipt">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportDetail_tblImportReceipt1">
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="1" />
+          <End Role="tblImportDetail" Type="Self.tblImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblImportReceipt">
+              <PropertyRef Name="ImportReceiptID" />
+            </Principal>
+            <Dependent Role="tblImportDetail">
+              <PropertyRef Name="ImportReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportDetail_tblProduct1">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblImportDetail" Type="Self.tblImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblImportDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportReceipt_tblDistributor1">
+          <End Role="tblDistributor" Type="Self.tblDistributor" Multiplicity="1" />
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistributor">
+              <PropertyRef Name="DistributorID" />
+            </Principal>
+            <Dependent Role="tblImportReceipt">
+              <PropertyRef Name="DistributorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportReceipt_tblEmployee">
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="1" />
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEmployee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tblImportReceipt">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="tblDistributor" EntityType="Self.tblDistributor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExportDetail" EntityType="Self.tblExportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExportReceipt" EntityType="Self.tblExportReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblImportDetail" EntityType="Self.tblImportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblImportReceipt" EntityType="Self.tblImportReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStoreBuy" EntityType="Self.tblStoreBuy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblExportDetail_tblExportReceipt1" Association="Self.FK_tblExportDetail_tblExportReceipt1">
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipt" />
+            <End Role="tblExportDetail" EntitySet="tblExportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportDetail_tblProduct1" Association="Self.FK_tblExportDetail_tblProduct1">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblExportDetail" EntitySet="tblExportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportReceipt_tblEmployee" Association="Self.FK_tblExportReceipt_tblEmployee">
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportReceipt_tblStoreBuy1" Association="Self.FK_tblExportReceipt_tblStoreBuy1">
+            <End Role="tblStoreBuy" EntitySet="tblStoreBuy" />
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportDetail_tblImportReceipt1" Association="Self.FK_tblImportDetail_tblImportReceipt1">
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipt" />
+            <End Role="tblImportDetail" EntitySet="tblImportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportDetail_tblProduct1" Association="Self.FK_tblImportDetail_tblProduct1">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblImportDetail" EntitySet="tblImportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportReceipt_tblDistributor1" Association="Self.FK_tblImportReceipt_tblDistributor1">
+            <End Role="tblDistributor" EntitySet="tblDistributor" />
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportReceipt_tblEmployee" Association="Self.FK_tblImportReceipt_tblEmployee">
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDistributor">
+          <Key>
+            <PropertyRef Name="DistributorID" />
+          </Key>
+          <Property Name="DistributorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblImportReceipts" Relationship="Self.FK_tblImportReceipt_tblDistributor1" FromRole="tblDistributor" ToRole="tblImportReceipt" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblExportReceipts" Relationship="Self.FK_tblExportReceipt_tblEmployee" FromRole="tblEmployee" ToRole="tblExportReceipt" />
+          <NavigationProperty Name="tblImportReceipts" Relationship="Self.FK_tblImportReceipt_tblEmployee" FromRole="tblEmployee" ToRole="tblImportReceipt" />
+        </EntityType>
+        <EntityType Name="tblExportDetail">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ExportReceiptID" />
+          </Key>
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExportReceiptID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tblExportReceipt" Relationship="Self.FK_tblExportDetail_tblExportReceipt1" FromRole="tblExportDetail" ToRole="tblExportReceipt" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK_tblExportDetail_tblProduct1" FromRole="tblExportDetail" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblExportReceipt">
+          <Key>
+            <PropertyRef Name="ExportReceiptID" />
+          </Key>
+          <Property Name="ExportReceiptID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoreID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeliveryStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PayMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblEmployee" Relationship="Self.FK_tblExportReceipt_tblEmployee" FromRole="tblExportReceipt" ToRole="tblEmployee" />
+          <NavigationProperty Name="tblExportDetails" Relationship="Self.FK_tblExportDetail_tblExportReceipt1" FromRole="tblExportReceipt" ToRole="tblExportDetail" />
+          <NavigationProperty Name="tblStoreBuy" Relationship="Self.FK_tblExportReceipt_tblStoreBuy1" FromRole="tblExportReceipt" ToRole="tblStoreBuy" />
+        </EntityType>
+        <EntityType Name="tblImportDetail">
+          <Key>
+            <PropertyRef Name="ImportReceiptID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ImportReceiptID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tblImportReceipt" Relationship="Self.FK_tblImportDetail_tblImportReceipt1" FromRole="tblImportDetail" ToRole="tblImportReceipt" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK_tblImportDetail_tblProduct1" FromRole="tblImportDetail" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblImportReceipt">
+          <Key>
+            <PropertyRef Name="ImportReceiptID" />
+          </Key>
+          <Property Name="ImportReceiptID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistributorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tblDistributor" Relationship="Self.FK_tblImportReceipt_tblDistributor1" FromRole="tblImportReceipt" ToRole="tblDistributor" />
+          <NavigationProperty Name="tblEmployee" Relationship="Self.FK_tblImportReceipt_tblEmployee" FromRole="tblImportReceipt" ToRole="tblEmployee" />
+          <NavigationProperty Name="tblImportDetails" Relationship="Self.FK_tblImportDetail_tblImportReceipt1" FromRole="tblImportReceipt" ToRole="tblImportDetail" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImportPrice" Type="Double" Nullable="false" />
+          <Property Name="ExportPrice" Type="Double" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblExportDetails" Relationship="Self.FK_tblExportDetail_tblProduct1" FromRole="tblProduct" ToRole="tblExportDetail" />
+          <NavigationProperty Name="tblImportDetails" Relationship="Self.FK_tblImportDetail_tblProduct1" FromRole="tblProduct" ToRole="tblImportDetail" />
+        </EntityType>
+        <EntityType Name="tblStoreBuy">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblExportReceipts" Relationship="Self.FK_tblExportReceipt_tblStoreBuy1" FromRole="tblStoreBuy" ToRole="tblExportReceipt" />
+        </EntityType>
+        <Association Name="FK_tblImportReceipt_tblDistributor1">
+          <End Role="tblDistributor" Type="Self.tblDistributor" Multiplicity="1" />
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistributor">
+              <PropertyRef Name="DistributorID" />
+            </Principal>
+            <Dependent Role="tblImportReceipt">
+              <PropertyRef Name="DistributorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportReceipt_tblEmployee">
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="1" />
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEmployee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tblExportReceipt">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportReceipt_tblEmployee">
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="1" />
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEmployee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tblImportReceipt">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportDetail_tblExportReceipt1">
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="1" />
+          <End Role="tblExportDetail" Type="Self.tblExportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExportReceipt">
+              <PropertyRef Name="ExportReceiptID" />
+            </Principal>
+            <Dependent Role="tblExportDetail">
+              <PropertyRef Name="ExportReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportDetail_tblProduct1">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblExportDetail" Type="Self.tblExportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblExportDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExportReceipt_tblStoreBuy1">
+          <End Role="tblStoreBuy" Type="Self.tblStoreBuy" Multiplicity="1" />
+          <End Role="tblExportReceipt" Type="Self.tblExportReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStoreBuy">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="tblExportReceipt">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportDetail_tblImportReceipt1">
+          <End Role="tblImportReceipt" Type="Self.tblImportReceipt" Multiplicity="1" />
+          <End Role="tblImportDetail" Type="Self.tblImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblImportReceipt">
+              <PropertyRef Name="ImportReceiptID" />
+            </Principal>
+            <Dependent Role="tblImportDetail">
+              <PropertyRef Name="ImportReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblImportDetail_tblProduct1">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
+          <End Role="tblImportDetail" Type="Self.tblImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblImportDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDistributors" EntityType="Self.tblDistributor" />
+          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+          <EntitySet Name="tblExportDetails" EntityType="Self.tblExportDetail" />
+          <EntitySet Name="tblExportReceipts" EntityType="Self.tblExportReceipt" />
+          <EntitySet Name="tblImportDetails" EntityType="Self.tblImportDetail" />
+          <EntitySet Name="tblImportReceipts" EntityType="Self.tblImportReceipt" />
+          <EntitySet Name="tblProducts" EntityType="Self.tblProduct" />
+          <EntitySet Name="tblStoreBuys" EntityType="Self.tblStoreBuy" />
+          <AssociationSet Name="FK_tblImportReceipt_tblDistributor1" Association="Self.FK_tblImportReceipt_tblDistributor1">
+            <End Role="tblDistributor" EntitySet="tblDistributors" />
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportReceipt_tblEmployee" Association="Self.FK_tblExportReceipt_tblEmployee">
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportReceipt_tblEmployee" Association="Self.FK_tblImportReceipt_tblEmployee">
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportDetail_tblExportReceipt1" Association="Self.FK_tblExportDetail_tblExportReceipt1">
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipts" />
+            <End Role="tblExportDetail" EntitySet="tblExportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportDetail_tblProduct1" Association="Self.FK_tblExportDetail_tblProduct1">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblExportDetail" EntitySet="tblExportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExportReceipt_tblStoreBuy1" Association="Self.FK_tblExportReceipt_tblStoreBuy1">
+            <End Role="tblStoreBuy" EntitySet="tblStoreBuys" />
+            <End Role="tblExportReceipt" EntitySet="tblExportReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportDetail_tblImportReceipt1" Association="Self.FK_tblImportDetail_tblImportReceipt1">
+            <End Role="tblImportReceipt" EntitySet="tblImportReceipts" />
+            <End Role="tblImportDetail" EntitySet="tblImportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblImportDetail_tblProduct1" Association="Self.FK_tblImportDetail_tblProduct1">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblImportDetail" EntitySet="tblImportDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="tblDistributors">
+            <EntityTypeMapping TypeName="Model.tblDistributor">
+              <MappingFragment StoreEntitySet="tblDistributor">
+                <ScalarProperty Name="DistributorID" ColumnName="DistributorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="Model.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EName" ColumnName="EName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExportDetails">
+            <EntityTypeMapping TypeName="Model.tblExportDetail">
+              <MappingFragment StoreEntitySet="tblExportDetail">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ExportReceiptID" ColumnName="ExportReceiptID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExportReceipts">
+            <EntityTypeMapping TypeName="Model.tblExportReceipt">
+              <MappingFragment StoreEntitySet="tblExportReceipt">
+                <ScalarProperty Name="ExportReceiptID" ColumnName="ExportReceiptID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+                <ScalarProperty Name="PayMethod" ColumnName="PayMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblImportDetails">
+            <EntityTypeMapping TypeName="Model.tblImportDetail">
+              <MappingFragment StoreEntitySet="tblImportDetail">
+                <ScalarProperty Name="ImportReceiptID" ColumnName="ImportReceiptID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblImportReceipts">
+            <EntityTypeMapping TypeName="Model.tblImportReceipt">
+              <MappingFragment StoreEntitySet="tblImportReceipt">
+                <ScalarProperty Name="ImportReceiptID" ColumnName="ImportReceiptID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="DistributorID" ColumnName="DistributorID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="Model.tblProduct">
+              <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ImportPrice" ColumnName="ImportPrice" />
+                <ScalarProperty Name="ExportPrice" ColumnName="ExportPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStoreBuys">
+            <EntityTypeMapping TypeName="Model.tblStoreBuy">
+              <MappingFragment StoreEntitySet="tblStoreBuy">
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
